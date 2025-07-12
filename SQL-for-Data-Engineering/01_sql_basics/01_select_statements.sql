@@ -2,23 +2,28 @@ USE [DataPurBatch01]
 GO
 
 -- Basic SELECT with Column Aliases
+
+SELECT * FROM patients;
+
 SELECT 
     patient_id AS ID, 
     name AS PatientName, 
     age 
 FROM patients;
 
+
 -- Alternate Alias Syntax (Alias = ColumnName)
 SELECT 
     ID = patient_id, 
     PatientName = name , 
-    age
+    age AS CurrentAge
 FROM patients;
 
 -- Filter: Age >= 60 AND Diagnosis = 'Hypertension'
 SELECT name, age, diagnosis 
 FROM patients 
-WHERE age >= 60 AND diagnosis = 'Hypertension';
+WHERE age = 60 
+AND diagnosis = 'Hypertension';
 
 -- Filter: Patients under 30 with either Diabetes OR Hypertension
 SELECT name, age, diagnosis 
@@ -37,19 +42,24 @@ SELECT name FROM patients WHERE name LIKE 'P%';
 SELECT name FROM patients WHERE name LIKE '_a%';
 
 -- LIKE with character set: Match Sara or Sera
-SELECT name FROM patients WHERE name LIKE 'S[ae]ra';
+SELECT name FROM patients WHERE name LIKE 'p[ae]tient 1%';
 
 -- LIKE with exclusion: Match Jihn, Jehn (exclude John)
-SELECT name FROM patients WHERE name LIKE 'J[^o]hn';
+SELECT name FROM patients WHERE name LIKE 'patient [^1]';
+
 
 -- ORDER BY Age Descending (Oldest to Youngest)
 SELECT name, age 
 FROM patients 
-ORDER BY age DESC;
+ORDER BY age DESC, Name Asc;
 
 -- IS NULL: Patients without email address
 SELECT name, diagnosis 
 FROM patients 
+WHERE diagnosis IS NULL;
+
+
+SELECT * FROM patients 
 WHERE diagnosis IS NULL;
 
 -- IS NOT NULL: Patients with email address
@@ -85,5 +95,5 @@ FROM patients;
 SELECT 
     name,
     age,
-    IIF(age > 50, 'Senior', 'Adult') AS AgeCategory
+    IIF(age > 50, 'TRUE', 'FALSE') AS AgeCategory
 FROM patients;
