@@ -2,20 +2,18 @@ USE [DataPurBatch01]
 GO
 
 -- Basic SELECT with Column Aliases
-
 SELECT * FROM patients;
 
 SELECT 
-    patient_id AS ID, 
-    name AS PatientName, 
+    patient_id, 
+    name, 
     age 
 FROM patients;
-
 
 -- Alternate Alias Syntax (Alias = ColumnName)
 SELECT 
     ID = patient_id, 
-    PatientName = name , 
+    PatientName = name, 
     age AS CurrentAge
 FROM patients;
 
