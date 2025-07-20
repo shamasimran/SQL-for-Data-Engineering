@@ -23,9 +23,8 @@ SELECT  Count(DISTINCT Region) AS UnqRegionCount  FROM Sales
 
 
 ------------------------- Aggregate Functions / NULL Handling  ------------
+SELECT * FROM Sales
 SELECT COUNT(*) AS TotalRows FROM Sales;
-
-SELECT COUNT(*) AS TotalRows FROM Sales WHERE Region IS NOT NULL;
-
 SELECT COUNT(Region) AS NonNullRegions FROM Sales;
+SELECT COUNT(*) AS TotalRows FROM Sales WHERE Region IS NOT NULL;
 ------------------------- ******************** ----------------------------
