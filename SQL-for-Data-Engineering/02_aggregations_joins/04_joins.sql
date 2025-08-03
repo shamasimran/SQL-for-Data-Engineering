@@ -3,6 +3,7 @@ GO
 
 -- INNER JOIN: Matching Rows from Both Tables
 -- Get patient details with their hospital visit data (only matching records)
+
 SELECT 
   p.patient_id AS p_patient_id
 , hv.patient_id AS hv_patient_id
@@ -15,7 +16,8 @@ INNER JOIN hospital_visits hv ON p.patient_id = hv.patient_id
 --INNER JOIN hospital_visits hv ON p.patient_id <> hv.patient_id
 --WHERE p.patient_id = 1
 --ORDER BY hv.patient_id
-
+-------------------------------------------------------------------------------------
+--SELECT * FROM diagnoses p WHERE patient_id = 1
 
 -- LEFT JOIN: All Rows from Left, Matched from Right
 -- Get all patients and their diagnosis if any
@@ -26,8 +28,8 @@ SELECT
 , p.age
 , d.diagnosis
 FROM patients p
-LEFT JOIN diagnoses d ON p.patient_id = d.patient_id
---WHERE d.patient_id IS NULL
+LEFT OUTER JOIN diagnoses d ON p.patient_id = d.patient_id
+WHERE d.patient_id IS NULL
 
 -- RIGHT JOIN: All Rows from Right, Matched from Left
 -- Get all diagnosis records and match patients if they exist
@@ -69,7 +71,8 @@ WHERE p.hierarchy_type = 'Provider' AND pr.hierarchy_type = 'Practice';
 -- Get every combination of patient and hospital department
 SELECT P.patient_id, p.name AS Patient, hv.department
 FROM patients p
-CROSS JOIN (SELECT DISTINCT department FROM hospital_visits) hv;
+CROSS JOIN (SELECT DISTINCT department FROM hospital_visits) hv
+--Where p.patient_id=1
 
 -- 8. CROSS APPLY
 -- For each patient, get their latest vitals stats using CROSS APPLY
@@ -82,4 +85,8 @@ CROSS APPLY (
     FROM patient_vitals v
     WHERE v.patient_id = p.patient_id
     ORDER BY vitals_date DESC
-)AS v;
+)AS v
+
+SELECT v.patient_id, vitals_date, heart_rate, blood_pressure
+FROM patient_vitals v
+WHERE v.patient_id = 1
